@@ -1,3 +1,8 @@
 import React from 'react';
+import { ViewPosts } from 'views/viewPosts';
 
-export const App = () => <div>This is the blog</div>;
+export const App = () => (
+  <div>
+    <ViewPosts />
+  </div>
+);
