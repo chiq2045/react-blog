@@ -88,7 +88,6 @@ export const resolvers = {
       .then((v) => {
         id = v.length + 1;
       });
-    console.log(id);
     return db.collection('users').insertOne({
       id,
       name: name || '',
