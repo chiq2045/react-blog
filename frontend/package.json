@@ -4,8 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@apollo/client": "^3.4.7",
     "@types/node": "^16.6.1",
-    "bulma": "^0.9.3",
+    "cirrus-ui": "^0.6.2-patch-1",
+    "graphql": "^15.5.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0"
@@ -48,8 +50,8 @@
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"
   },
-    "scripts": {
-    "dev": "NODE_ENV=development && webpack serve --progress --color",
-    "start": "NODE_ENV=production && webpack --progress --color"
+  "scripts": {
+    "dev": "webpack serve --progress --color --mode development",
+    "start": "webpack --progress --color --mode production"
   }
 }
