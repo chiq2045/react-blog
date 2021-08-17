@@ -1,19 +1,12 @@
 import React from 'react';
-
-type PostType = {
-  id: number;
-  title: string;
-  content: string;
-  dateCreated: string;
-  dateModified: string;
-};
+import { PostType } from 'utils/types';
+import {formatDisplayDate} from 'utils/constants';
 
 interface Props {
   post: PostType;
 }
 
 export const Post = ({post}: Props) => {
-  // const dateOfPost = post.dateModified ? post.dateModified : post.dateCreated;
   return (
     <div className='tile p-1 bg-gray-200 u-round'>
       <div className='tile__icon'>
@@ -28,7 +21,7 @@ export const Post = ({post}: Props) => {
         <p className='tile__subtitle m-0'>
           {post.content}
         </p>
-        {/* <span className='info'>{new Intl.DateTimeFormat('en-GB').format(dateOfPost)}</span> */}
+        <span className='info'>{formatDisplayDate(post.dateModified ? `(Edited: ${post.dateModified})` : post.dateCreated)}</span>
       </div>
     </div>
   );

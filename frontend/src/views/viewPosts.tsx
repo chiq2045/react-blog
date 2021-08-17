@@ -1,39 +1,16 @@
 import React from 'react';
-import { gql, useQuery } from '@apollo/client';
-import { Post, Post as PostComponent } from 'components/post';
-
-const POSTS = gql`
-  query GetPosts {
-    posts {
-      id
-      title
-      content
-      dateCreated
-      dateModified
-    }
-  }
-`;
-type Post = {
-  id: number;
-  title: string;
-  content: string;
-  dateCreated: string;
-  dateModified: string;
-};
-
-// type PostType = {
-//   id: number;
-//   title: string;
-//   content: string;
-//   dateCreated: Date;
-//   dateModified: Date | null;
-// };
+import { useQuery } from '@apollo/client';
+import { Post } from 'components/post';
+import { PostType } from 'utils/types';
+import { POSTS, sortByDate } from 'utils/constants';
 
 export const ViewPosts = () => {
-  const { loading, error, data } = useQuery<{ posts: Array<Post> }>(POSTS);
+  const { loading, error, data } = useQuery<{ posts: Array<PostType> }>(POSTS);
+
   if (loading) {
     return <div>Loading ...</div>;
   }
+
   if (error) {
     return (
       <div className='p-2 pr-4'>
@@ -46,24 +23,39 @@ export const ViewPosts = () => {
     );
   }
 
-  // console.log(data?.posts[0]);
-  // const posts: Array<PostType> = data
-  //   ? data.posts.map((v) => {
-  //       return {
-  //         ...v,
-  //         dateCreated: new Date(v.dateCreated),
-  //         dateModified: v.dateModified !== '' ? new Date(v.dateModified) : null
-  //       };
-  //     })
-  //   : [];
-
   return (
     <div>
-      {data?.posts.map((v: Post) => (
-        <div className='px-2 py-1' key={v.id}>
-          <PostComponent post={v} />
+      {data?.posts ? (
+        sortByDate(data?.posts).map((v) => (
+          <div className='px-2 py-1' key={v.id}>
+            <Post post={v} />
+          </div>
+        ))
+      ) : (
+        <div className='px-2 py-1'>
+          <div className='placeholder'>
+            <div className='placeholder-icon'>
+              <span className='icon'>
+                <i className='fa fa-wrapper fa-coffee x-large'></i>
+              </span>
+            </div>
+            <h6 className='placeholder-title'>
+              The sever is currently taking a nap.
+            </h6>
+            <div className='placeholder-subtitle'>
+              Come back in a few hours or press the refresh button.
+            </div>
+            <div className='placeholder-commands u-center'>
+              <div className='m-1'>
+                <button className='btn-primary'>Refresh</button>
+              </div>
+              <div className='m-1'>
+                <button>Home</button>
+              </div>
+            </div>
+          </div>
         </div>
-      ))}
+      )}
     </div>
   );
 };
