@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { App } from './app';
 import 'cirrus-ui';
+import './index.css';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',
