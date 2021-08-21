@@ -4,34 +4,24 @@ import { Post } from 'components/post';
 import { PostType } from 'utils/types';
 import { GETPOSTS, sortByDate } from 'utils/constants';
 import { Loader } from 'components/loaders';
+import { ErrorPanel } from 'components/errorPanel';
 
 export const ViewPosts = () => {
-  const {
-    loading: getLoading,
-    error: getError,
-    data: getData
-  } = useQuery<{ posts: Array<PostType> }>(GETPOSTS);
+  const { loading, error, data } =
+    useQuery<{ posts: Array<PostType> }>(GETPOSTS);
 
-  if (getLoading) {
-    return <Loader loading={getLoading}>Loading...</Loader>;
+  if (loading) {
+    return <Loader loading={loading}>Loading...</Loader>;
   }
 
-  if (getError) {
-    return (
-      <section className='content'>
-        <div className='toast toast--primary'>
-          <button className='btn-close'></button>
-          <h4 className='toast__title'>Error</h4>
-          <p>{getError.message}</p>
-        </div>
-      </section>
-    );
+  if (error) {
+    return <ErrorPanel error={error}>Submission Error!</ErrorPanel>;
   }
 
   return (
     <section className='content'>
-      {getData?.posts ? (
-        sortByDate(getData?.posts).map((v) => (
+      {data?.posts ? (
+        sortByDate(data?.posts).map((v) => (
           <div className='py-1' key={v.id}>
             <Post post={v} />
           </div>
