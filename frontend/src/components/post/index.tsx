@@ -13,7 +13,7 @@ export const Post = ({ post }: Props) => {
         <div
           className='card__image'
           style={{
-            backgroundImage: 'https://unsplash.it/640/480?random&amp;blur'
+            backgroundImage: 'https://source.unsplash.com/random/800x600'
           }}
         ></div>
       </div>

@@ -5,6 +5,7 @@ import { PostType } from 'utils/types';
 import { GETPOSTS, sortByDate } from 'utils/constants';
 import { Loader } from 'components/loaders';
 import { ErrorPanel } from 'components/errorPanel';
+import { Placeholder } from 'components/placeholder';
 
 export const ViewPosts = () => {
   const { loading, error, data } =
@@ -15,7 +16,7 @@ export const ViewPosts = () => {
   }
 
   if (error) {
-    return <ErrorPanel error={error}>Submission Error!</ErrorPanel>;
+    return <ErrorPanel error={error} errorTitle={<p>Error!</p>} />;
   }
 
   return (
@@ -27,27 +28,10 @@ export const ViewPosts = () => {
           </div>
         ))
       ) : (
-        <div className='placeholder'>
-          <div className='placeholder-icon'>
-            <span className='icon'>
-              <i className='fa fa-wrapper fa-coffee x-large'></i>
-            </span>
-          </div>
-          <h6 className='placeholder-title'>
-            The sever is currently taking a nap.
-          </h6>
-          <div className='placeholder-subtitle'>
-            Come back in a few hours or press the refresh button.
-          </div>
-          <div className='placeholder-commands u-center'>
-            <div className='m-1'>
-              <button className='btn-primary'>Refresh</button>
-            </div>
-            <div className='m-1'>
-              <button>Home</button>
-            </div>
-          </div>
-        </div>
+        <Placeholder
+          title='There are no posts'
+          subtitle='Move along, there is nothing to see here. Or you can try again'
+        />
       )}
     </section>
   );
