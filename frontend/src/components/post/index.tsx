@@ -6,9 +6,9 @@ interface Props {
   post: PostType;
 }
 
-export const Post = ({ post }: Props) => {
+export const PostCard = ({ post }: Props) => {
   return (
-    <div className='card card--slide-up'>
+    <div className='card card--slide-up' style={{ maxWidth: '350px' }}>
       <div className='card__container'>
         <div
           className='card__image'
@@ -27,10 +27,12 @@ export const Post = ({ post }: Props) => {
           </div>
         </div>
       </div>
-      <div className='card__body content'>
-        {post.content}
+      <div className='card__body content pt-4'>{post.content}</div>
+      <div className='card__footer content'>
+        {post.dateModified
+          ? `Modified: ${formatDisplayDate(post.dateModified)}`
+          : formatDisplayDate(post.dateCreated)}
       </div>
-      <div className='card__footer content'>{post.dateModified ? `Modified: ${formatDisplayDate(post.dateModified)}` : formatDisplayDate(post.dateCreated)}</div>
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { StoryWrapper } from 'utils/constants/storyWrapper';
-import { Post } from '.';
+import { PostCard } from '.';
 
 export default {
   title: 'Components/Posts/Post',
-  component: Post,
+  component: PostCard,
   argTypes: {
     post: {
       id: 1,
@@ -15,11 +15,11 @@ export default {
       dateModified: ''
     }
   }
-} as ComponentMeta<typeof Post>;
+} as ComponentMeta<typeof PostCard>;
 
-const Template: ComponentStory<typeof Post> = (args) => (
+const Template: ComponentStory<typeof PostCard> = (args) => (
   <StoryWrapper className='content'>
-    <Post {...args} />
+    <PostCard {...args} />
   </StoryWrapper>
 );
 

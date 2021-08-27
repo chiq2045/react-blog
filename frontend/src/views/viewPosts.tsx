@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { Post } from 'components/post';
+import { PostCard } from 'components/post';
 import { PostType } from 'utils/types';
 import { GETPOSTS, sortByDate } from 'utils/constants';
 import { Loader } from 'components/loaders';
@@ -24,7 +24,7 @@ export const ViewPosts = () => {
       {data?.posts ? (
         sortByDate(data?.posts).map((v) => (
           <div className='py-1' key={v.id}>
-            <Post post={v} />
+            <PostCard post={v} />
           </div>
         ))
       ) : (
