@@ -8,6 +8,7 @@ const mode = process.env.NODE_ENV || 'production';
 const devMode = mode === 'development';
 const plugins = [
   new HtmlWebpackPlugin({
+    favicon: './assets/logo_white_background-logo_only.png',
     template: resolve(__dirname, 'src', 'index.html')
   }),
   new MiniCssExtractPlugin({
@@ -50,20 +51,14 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: [
-                '@babel/preset-env',
-                '@babel/preset-react'
-              ]
+              presets: ['@babel/preset-env', '@babel/preset-react']
             }
           }
         ]
       },
       {
         test: /\.css$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader'
-        ]
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -72,18 +67,8 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [
-      '*',
-      '.js',
-      '.ts',
-      '.jsx',
-      '.tsx',
-      '.json',
-      '.css'
-    ],
-    plugins: [
-      new TsconfigPathsPlugin()
-    ]
+    extensions: ['*', '.js', '.ts', '.jsx', '.tsx', '.json', '.css'],
+    plugins: [new TsconfigPathsPlugin()]
   },
   devServer: {
     publicPath: '/',
@@ -93,4 +78,3 @@ module.exports = {
   },
   plugins
 };
-

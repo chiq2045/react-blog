@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { App } from './app';
-import 'cirrus-ui';
+import 'bulma/css/bulma.min.css';
 import './index.css';
 
 const client = new ApolloClient({

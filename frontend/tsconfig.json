@@ -15,8 +15,9 @@
     "paths": {
       "components": ["components"],
       "utils": ["utils"],
-      "views": ["views"]
+      "views": ["views"],
+      "assets": ["./assets"]
     }
   },
-  "include": ["src", "babel.config.json"]
+  "include": ["src", "babel.config.json"],
 }

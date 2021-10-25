@@ -1,12 +1,16 @@
+import { NavBar } from 'components/NavBar';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React from 'react';
-import {Header} from 'components/header';
-import { ViewPosts } from 'views/viewPosts';
-import {Footer} from 'components/footer';
 
 export const App = () => (
   <div>
-    <Header />
-    <ViewPosts />
-    <Footer />
+    <Router>
+      <NavBar />
+      <Switch>
+        <Route exact path='/'>
+          Blog
+        </Route>
+      </Switch>
+    </Router>
   </div>
 );
