@@ -31,7 +31,7 @@ export const App = () => (
             <Route path='/posts/new'>
               <AddPost />
             </Route>
-            <Route path='/posts/:id'>
+            <Route path='/posts/view/:id'>
               <ViewPost />
             </Route>
           </div>
