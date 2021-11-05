@@ -23,12 +23,11 @@ export const NavBar = () => {
 
   return (
     <nav
-      className='header header-fixed header-animated'
+      className='header header-fixed header-animated py-2'
       role='navigation'
       aria-label='nav bar'
-      style={{ height: '5vh' }}
     >
-      <div className='header-brand w-10 px-4'>
+      <div className='header-brand w-20 px-4'>
         <Link className='nav-item no-hover w-100' to='/'>
           <img
             src='../../assets/logo_white_background-logo_text.png'
