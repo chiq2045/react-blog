@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -6,6 +7,7 @@ export const AddPost = () => {
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
   const [cancel, setCancel] = useState(false);
+  const [tab, setTab] = useState(0);
 
   const handleSaveDraft = () => console.log('save draft', { title, content });
   const handleSavePost = () => console.log('save post', { title, content });
@@ -30,29 +32,55 @@ export const AddPost = () => {
         placeholder='Title'
       />
       <div className='pt-1'>
-        <ReactQuill
-          aria-label='content'
-          theme='snow'
-          value={content}
-          onChange={(v) => setContent(v)}
-          modules={{
-            toolbar: [
-              [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
-              [{ header: [1, 2, 3, 4, 5, 6, false] }],
-              ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-              [{ align: [] }],
-              [{ header: 1 }, { header: 2 }], // custom button values
-              [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
-              [{ list: 'ordered' }, { list: 'bullet' }],
-              ['blockquote', 'code-block'],
-              [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
-              [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-              ['clean'] // remove formatting
-            ]
-          }}
-        >
-          <div style={{ height: '50vh' }} />
-        </ReactQuill>
+        <div className='tab-container tabs-classic'>
+          <ul className='mb-0 mx-2'>
+            <li className={tab === 0 ? 'selected' : ''}>
+              <button
+                className='btn-info outline tab-item-content'
+                onClick={() => setTab(0)}
+              >
+                Edit
+              </button>
+            </li>
+            <li className={tab === 1 ? 'selected' : ''}>
+              <button
+                className='btn-info outline tab-item-content'
+                onClick={() => setTab(1)}
+              >
+                Preview
+              </button>
+            </li>
+          </ul>
+        </div>
+        {tab === 0 ? (
+          <ReactQuill
+            aria-label='content'
+            theme='snow'
+            value={content}
+            onChange={(v) => setContent(v)}
+            modules={{
+              toolbar: [
+                [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
+                [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+                [{ align: [] }],
+                [{ header: 1 }, { header: 2 }], // custom button values
+                [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+                [{ list: 'ordered' }, { list: 'bullet' }],
+                ['blockquote', 'code-block'],
+                [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+                [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+                ['clean'] // remove formatting
+              ]
+            }}
+          >
+            <article style={{ height: '50vh' }} />
+          </ReactQuill>
+        ) : (
+          <article style={{ height:'50vh'}}>
+            {parse(content)}
+          </article>
+        )}
       </div>
       <div className='u-none u-inline-md'>
         <div className='pt-1 u-flex u-justify-space-between'>
@@ -63,7 +91,7 @@ export const AddPost = () => {
             className='btn-dark w-30'
             type='submit'
             onClick={handleSaveDraft}
-            disabled={!content && !title}
+            disabled={!content || !title}
           >
             Save Draft
           </button>
@@ -71,7 +99,7 @@ export const AddPost = () => {
             className='btn-dark w-30'
             type='submit'
             onClick={handleSavePost}
-            disabled={!content && !title}
+            disabled={!content || !title}
           >
             Create Post
           </button>
@@ -90,7 +118,7 @@ export const AddPost = () => {
             className='btn-dark w-50 pl-1'
             type='submit'
             onClick={handleSaveDraft}
-            disabled={!content && !title}
+            disabled={!content || !title}
           >
             Save Draft
           </button>
@@ -98,7 +126,7 @@ export const AddPost = () => {
             className='btn-dark w-100'
             type='submit'
             onClick={handleSavePost}
-            disabled={!content && !title}
+            disabled={!content || !title}
           >
             Create Post
           </button>
