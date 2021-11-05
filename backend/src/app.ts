@@ -8,11 +8,12 @@ import graphqlHTTP from 'koa-graphql';
 import cors from '@koa/cors';
 import { schema } from './schema';
 import { resolvers } from './resolvers';
-import { db } from './database';
+import { db, devDb } from './database';
 
 
 const app = new Koa();
 const context = async () => await db();
+const devContext = async () => await devDb();
 
 app.use(logger());
 app.use(cors());
@@ -24,6 +25,17 @@ app.use(
       rootValue: resolvers,
       graphiql: true,
       context
+    })
+  )
+);
+app.use(
+  mount(
+    '/dev',
+    graphqlHTTP({
+      schema,
+      rootValue: resolvers,
+      graphiql: true,
+      context: devContext
     })
   )
 );

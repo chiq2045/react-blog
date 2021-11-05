@@ -1,17 +1,13 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 import { App } from './app';
 import 'cirrus-ui';
 import './index.css';
-
-const client = new ApolloClient({
-  uri: 'http://localhost:3000/graphql',
-  cache: new InMemoryCache()
-});
+import {client, devClient} from 'utils/client';
 
 render(
-  <ApolloProvider client={client}>
+  <ApolloProvider client={process.env.CLIENT === 'dev' ? devClient : client}>
     <App />
   </ApolloProvider>,
   document.querySelector('#blog')

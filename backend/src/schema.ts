@@ -7,6 +7,7 @@ export const schema = buildSchema(`
 		content: String!
 		dateCreated: String!
 		dateModified: String
+		draft: String!
 	}
 
   type Query {
@@ -16,8 +17,9 @@ export const schema = buildSchema(`
   }
 
 	type Mutation {
-		editPost(id: Int!, title: String!, content: String!): Post!
-		addPost(title: String!, content: String!): Post!
+		editPost(id: Int!, title: String!, content: String!, draft: String!): Post!
+		savePost(title: String!, content: String!): Post!
+		saveDraft(title: String!, draft: String!): Post!
 	}
 `);
 
