@@ -19,5 +19,5 @@
       "assets": ["./assets"]
     }
   },
-  "include": ["src", "babel.config.json"],
+  "include": ["src", "babel.config.json"]
 }
