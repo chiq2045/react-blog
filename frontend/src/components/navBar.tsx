@@ -27,7 +27,7 @@ export const NavBar = () => {
       role='navigation'
       aria-label='nav bar'
     >
-      <div className='header-brand w-20 px-4'>
+      <div className='header-brand px-4' style={{ width: '15rem' }}>
         <Link className='nav-item no-hover w-100' to='/'>
           <img
             src='../../assets/logo_white_background-logo_text.png'
