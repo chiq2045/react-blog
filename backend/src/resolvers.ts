@@ -1,5 +1,5 @@
 import { Db } from 'mongodb';
-import { Post } from './types';
+import { Post } from './types/post';
 
 export const resolvers = {
   posts: async (_: Partial<Post>, context: any) => {
