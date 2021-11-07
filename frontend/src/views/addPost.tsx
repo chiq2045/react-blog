@@ -1,28 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import parse from 'html-react-parser';
 import ReactQuill from 'react-quill';
+import { useHistory } from 'react-router-dom';
+import { ApolloError } from '@apollo/client';
 import 'react-quill/dist/quill.snow.css';
+import { Toast } from 'components/toast';
 
-export const AddPost = () => {
+interface Props {
+  savePost: () => void;
+  saveDraft: () => void;
+  error: ApolloError | undefined;
+  isSavingPost: boolean;
+  isSavingDraft: boolean;
+}
+export const AddPost = ({
+  saveDraft,
+  savePost,
+  isSavingDraft,
+  isSavingPost,
+  error
+}: Props) => {
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
-  const [cancel, setCancel] = useState(false);
   const [tab, setTab] = useState(0);
+  const [showToast, setShowToast] = useState(false);
 
-  const handleSaveDraft = () => console.log('save draft', { title, content });
-  const handleSavePost = () => console.log('save post', { title, content });
-  const handleCancel = () => {
-    setCancel(true);
-    console.log('cancel new post');
-  };
+  const { goBack } = useHistory();
 
   useEffect(() => {
-    if (!cancel) {
-      return handleSaveDraft();
+    if (error) {
+      setShowToast(true);
     }
-  });
+  }, [error, setShowToast]);
+
   return (
     <>
+      {error && (
+        <Toast
+          value={error.message}
+          onClose={() => setShowToast(false)}
+          show={showToast}
+        />
+      )}
       <h1 className='title is-1'>New Post</h1>
       <label>Title</label>
       <input
@@ -77,28 +96,30 @@ export const AddPost = () => {
             <article style={{ height: '50vh' }} />
           </ReactQuill>
         ) : (
-          <article style={{ height:'50vh'}}>
-            {parse(content)}
-          </article>
+          <article style={{ height: '50vh' }}>{parse(content)}</article>
         )}
       </div>
       <div className='u-none u-inline-md'>
         <div className='pt-1 u-flex u-justify-space-between'>
-          <button className='w-30' type='button' onClick={handleCancel}>
+          <button className='w-30' type='button' onClick={goBack}>
             Cancel
           </button>
           <button
-            className='btn-dark w-30'
+            className={`btn-dark w-30 ${
+              isSavingDraft ? 'loading btn--pilled' : ''
+            }`}
             type='submit'
-            onClick={handleSaveDraft}
+            onClick={saveDraft}
             disabled={!content || !title}
           >
             Save Draft
           </button>
           <button
-            className='btn-dark w-30'
+            className={`btn-dark w-30 ${
+              isSavingPost ? 'loading btn--pilled' : ''
+            }`}
             type='submit'
-            onClick={handleSavePost}
+            onClick={savePost}
             disabled={!content || !title}
           >
             Create Post
@@ -110,22 +131,26 @@ export const AddPost = () => {
           <button
             className='btn-danger h-100 w-50 pr-1'
             type='button'
-            onClick={handleCancel}
+            onClick={goBack}
           >
             Cancel
           </button>
           <button
-            className='btn-dark w-50 pl-1'
+            className={`btn-dark w-50 pl-1 ${
+              isSavingDraft ? 'loading btn--pilled' : ''
+            }`}
             type='submit'
-            onClick={handleSaveDraft}
+            onClick={saveDraft}
             disabled={!content || !title}
           >
             Save Draft
           </button>
           <button
-            className='btn-dark w-100'
+            className={`btn-dark w-100 ${
+              isSavingPost ? 'loading btn--pilled' : ''
+            }`}
             type='submit'
-            onClick={handleSavePost}
+            onClick={savePost}
             disabled={!content || !title}
           >
             Create Post
