@@ -3,26 +3,26 @@ import { Type } from 'utils/types';
 
 export const Toast = ({
   value,
-  type = 'error',
+  type = 'dark',
   title = '',
   onClose,
-  show
+  index,
 }: {
   value: string;
   type?: Type;
   title?: string;
   onClose: () => void;
-  show: boolean;
+  index: number;
 }) => {
   return (
     <div
       className={`toast toast--${type}`}
       style={{
-        visibility: show ? 'collapse' : 'hidden',
         position: 'fixed',
-        zIndex: 1,
-        left: '50%',
-        bottom: '30px'
+        zIndex: index,
+        right: '50%',
+        bottom: '50px',
+        width: '40%'
       }}
     >
       <button className='btn-close' onClick={onClose} />
