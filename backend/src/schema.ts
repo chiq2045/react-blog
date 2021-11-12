@@ -7,7 +7,7 @@ export const schema = buildSchema(`
 		content: String!
 		dateCreated: String!
 		dateModified: String
-		draft: String!
+		draft: String
 	}
 
   type Query {
