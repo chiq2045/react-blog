@@ -75,7 +75,7 @@ export const AddPost = ({ addToast }: Props) => {
               ]
             }}
           >
-            <article style={{ height: '50vh' }} />
+            <div role='textbox' style={{ height: '50vh' }} />
           </ReactQuill>
         ) : (
           <article style={{ height: '50vh' }}>{parse(content)}</article>
