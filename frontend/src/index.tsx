@@ -7,7 +7,7 @@ import './index.css';
 import {client, devClient} from 'utils/client';
 
 render(
-  <ApolloProvider client={process.env.NODE_ENV === 'development-memory' ? devClient : client}>
+  <ApolloProvider client={process.env.NODE_ENV === 'development' ? devClient : client}>
     <App />
   </ApolloProvider>,
   document.querySelector('#blog')
