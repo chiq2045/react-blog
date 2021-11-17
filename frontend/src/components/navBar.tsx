@@ -38,6 +38,7 @@ export const NavBar = () => {
           className={`nav-item nav-btn px-4 ${isActive ? 'is-active' : ''}`}
           aria-expanded={isActive}
           onClick={toggleMenu}
+          style={{ backgroundColor: 'transparent' }}
         >
           <span aria-hidden />
           <span aria-hidden />
