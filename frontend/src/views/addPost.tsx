@@ -1,47 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import parse from 'html-react-parser';
 import ReactQuill from 'react-quill';
 import { useHistory } from 'react-router-dom';
-import { ApolloError } from '@apollo/client';
 import 'react-quill/dist/quill.snow.css';
-import { Toast } from 'components/toast';
+import { Toast } from 'utils/types';
+import { useUpdatePosts } from 'utils/hooks/usePosts';
 
 interface Props {
-  savePost: () => void;
-  saveDraft: () => void;
-  error: ApolloError | undefined;
-  isSavingPost: boolean;
-  isSavingDraft: boolean;
+  addToast: (toast: Toast) => void;
 }
-export const AddPost = ({
-  saveDraft,
-  savePost,
-  isSavingDraft,
-  isSavingPost,
-  error
-}: Props) => {
+export const AddPost = ({ addToast }: Props) => {
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
   const [tab, setTab] = useState(0);
-  const [showToast, setShowToast] = useState(false);
 
   const { goBack } = useHistory();
 
-  useEffect(() => {
-    if (error) {
-      setShowToast(true);
-    }
-  }, [error, setShowToast]);
+  const { savePost, saveDraft, isSavingDraft, isSavingPost } = useUpdatePosts(
+    title,
+    content,
+    addToast
+  );
 
   return (
-    <>
-      {error && (
-        <Toast
-          value={error.message}
-          onClose={() => setShowToast(false)}
-          show={showToast}
-        />
-      )}
+    <form>
       <h1 className='title is-1'>New Post</h1>
       <label>Title</label>
       <input
@@ -109,7 +91,7 @@ export const AddPost = ({
               isSavingDraft ? 'loading btn--pilled' : ''
             }`}
             type='submit'
-            onClick={saveDraft}
+            onClick={() => saveDraft()}
             disabled={!content || !title}
           >
             Save Draft
@@ -119,7 +101,7 @@ export const AddPost = ({
               isSavingPost ? 'loading btn--pilled' : ''
             }`}
             type='submit'
-            onClick={savePost}
+            onClick={() => savePost()}
             disabled={!content || !title}
           >
             Create Post
@@ -140,7 +122,7 @@ export const AddPost = ({
               isSavingDraft ? 'loading btn--pilled' : ''
             }`}
             type='submit'
-            onClick={saveDraft}
+            onClick={() => saveDraft()}
             disabled={!content || !title}
           >
             Save Draft
@@ -150,13 +132,13 @@ export const AddPost = ({
               isSavingPost ? 'loading btn--pilled' : ''
             }`}
             type='submit'
-            onClick={savePost}
+            onClick={() => savePost()}
             disabled={!content || !title}
           >
             Create Post
           </button>
         </div>
       </div>
-    </>
+    </form>
   );
 };
